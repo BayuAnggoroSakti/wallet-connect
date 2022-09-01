@@ -1,0 +1,36 @@
+buildscript {
+    ext.kotlin_version = '1.3.50'
+    ext.sqlDelightVersion = "1.5.2"
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.1.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
